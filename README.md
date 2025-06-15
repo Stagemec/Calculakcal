@@ -1,2 +1,2 @@
 # Calculakcal
-Calculadora caloria casal e ajuste com referencia ao objetivo
+Calculadora de calorias, com ajustes refetente aos objetivo
