@@ -1,0 +1,49 @@
+{% extends 'usuarios/base.html' %}
+
+{% block title %}Gráfico de Peso{% endblock %}
+
+{% block content %}
+<h2>Evolução de Peso - {{ perfil.nome }}</h2>
+
+<canvas id="graficoPeso"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('graficoPeso');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {{ datas|safe }},
+      datasets: [{
+        label: 'Peso (kg)',
+        data: {{ pesos|safe }},
+        borderColor: 'blue',
+        fill: false,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: false } }
+    }
+  });
+</script>
+
+<hr>
+<h3>Histórico Registrado</h3>
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Data</th>
+    <th>Peso (kg)</th>
+  </tr>
+  {% for item in historico %}
+  <tr>
+    <td>{{ item.data|date:"d/m/Y" }}</td>
+    <td>{{ item.peso }}</td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="2">Nenhum histórico ainda.</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

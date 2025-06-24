@@ -1,0 +1,35 @@
+{% extends 'usuarios/base.html' %}
+{% block content %}
+
+<h2>Olá, {{ perfil.nome }}</h2>
+
+<ul>
+  <li><strong>Sexo:</strong> {{ perfil.get_sexo_display }}</li>
+  <li><strong>Idade:</strong> {{ perfil.idade }}</li>
+  <li><strong>Altura:</strong> {{ perfil.altura }} m</li>
+  <li><strong>Peso:</strong> {{ perfil.peso }} kg</li>
+</ul>
+
+<h3>Resultados:</h3>
+<ul>
+  <li><strong>IMC:</strong> <span style="color: {{ perfil.imc_cor }}">{{ perfil.imc }} - {{ perfil.imc_classificacao }}</span></li>
+  <li><strong>TMB:</strong> {{ perfil.tmb }} kcal/dia</li>
+  <li><strong>Calorias para manter:</strong> {{ perfil.calorias_para_manter }} kcal</li>
+  <li><strong>Proteína diária:</strong> {{ perfil.proteina_diaria }} g</li>
+</ul>
+
+<hr>
+<p><a href="{% url 'atualizar_peso' perfil.pk %}">📥 Atualizar Peso</a></p>
+<p><a href="{% url 'calcular_meta' perfil.pk %}">🎯 Definir Meta</a></p>
+<p><a href="{% url 'grafico_peso' perfil.pk %}">📊 Ver Histórico e Gráfico</a></p>
+<p><a href="{% url 'criar_perfil' %}">➕ Criar Novo Perfil</a></p>
+<p><a href="/admin/usuarios/perfil/">⚙️ Ver Todos os Perfis (admin)</a></p>
+
+<form action="{% url 'excluir_perfil' perfil.pk %}" method="post">
+  {% csrf_token %}
+  <button style="background:red;color:white;" onclick="return confirm('Tem certeza que deseja excluir este perfil?')">
+    ❌ Excluir Perfil
+  </button>
+</form>
+
+{% endblock %}
