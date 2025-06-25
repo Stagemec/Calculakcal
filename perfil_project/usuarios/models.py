@@ -71,7 +71,15 @@ class Perfil(models.Model):
         return round(self.tmb() * float(self.nivel_atividade), 2)
 
     def proteina_diaria(self):
-        return round(self.peso_ideal() * float(self.fator_proteina), 2)
+        mapa_fator = {
+            '1.2': 0.8,
+            '1.375': 1.2,
+            '1.55': 1.4,
+            '1.725': 1.6,
+            '1.9': 2.0,
+        }
+        fator = mapa_fator.get(self.nivel_atividade, 1.2)
+        return round(self.peso_ideal() * fator, 2)
 
     def estimativa_meta(self, kg=3, ganhar=True):
         ajuste = (7000 * kg) / 30
@@ -85,6 +93,7 @@ class PesoHistorico(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='historicos')
     peso = models.FloatField()
     data = models.DateField(auto_now_add=True)
+    
 
     def __str__(self):
         return f"{self.peso} kg em {self.data}"

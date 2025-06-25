@@ -6,7 +6,8 @@ from django.shortcuts import redirect
 
 def perfil_detalhe(request, pk):
     perfil = get_object_or_404(Perfil, pk=pk)
-    return render(request, 'usuarios/perfil_detalhe.html', {'perfil': perfil})
+    historico = perfil.historicos.order_by('data')
+    return render(request, 'usuarios/perfil_detalhe.html', {'perfil': perfil, 'historico': historico})
 
 
 def criar_perfil(request):
@@ -83,3 +84,10 @@ def home(request):
     if perfil:
         return redirect('perfil_detalhe', pk=perfil.pk)  # ✅ necessário passar o ID
     return redirect('criar_perfil')
+
+from django.shortcuts import render, get_object_or_404
+from .models import Perfil
+
+def lista_perfis(request):
+    perfis = Perfil.objects.all()
+    return render(request, 'usuarios/lista_perfis.html', {'perfis': perfis})

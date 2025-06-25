@@ -10,4 +10,5 @@ urlpatterns = [
     path('excluir/<int:pk>/', views.excluir_perfil, name='excluir_perfil'),
     path('perfil/<int:pk>/', views.perfil_detalhe, name='perfil_detalhe'),
     path('perfil/<int:pk>/', views.perfil_detalhe, name='perfil_detalhe'),
+    path('perfis/', views.lista_perfis, name='lista_perfis'),
 ]

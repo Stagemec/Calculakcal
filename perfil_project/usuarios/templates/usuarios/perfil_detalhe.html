@@ -10,6 +10,50 @@
   <li><strong>Peso:</strong> {{ perfil.peso }} kg</li>
 </ul>
 
+
+<div style="max-width: 600px; height: 300px; margin: auto;">
+  <canvas id="graficoPeso">
+    
+        <h3>📈 Evolução do Peso</h3>
+    <canvas id="graficoPeso" width="70%" height="50%"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const labels = [{% for registro in historico %}'{{ registro.data }}',{% endfor %}];
+      const pesos = [{% for registro in historico %}{{ registro.peso }},{% endfor %}];
+
+      console.log("Labels:", labels);
+      console.log("Pesos:", pesos);
+
+      const ctx = document.getElementById('graficoPeso').getContext('2d');
+      const graficoPeso = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Peso (kg)',
+            data: pesos,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.3,
+            fill: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: false
+            }
+          }
+        }
+      });
+    </script>
+
+  </canvas>
+</div>
+
 <h3>Resultados:</h3>
 <ul>
   <li><strong>IMC:</strong> <span style="color: {{ perfil.imc_cor }}">{{ perfil.imc }} - {{ perfil.imc_classificacao }}</span></li>
@@ -32,7 +76,8 @@
 <p><a href="{% url 'calcular_meta' perfil.pk %}">🎯 Definir Meta</a></p>
 <p><a href="{% url 'grafico_peso' perfil.pk %}">📊 Ver Histórico e Gráfico</a></p>
 <p><a href="{% url 'criar_perfil' %}">➕ Criar Novo Perfil</a></p>
-<p><a href="/admin/usuarios/perfil/">⚙️ Ver Todos os Perfis (admin)</a></p>
+<p><a href="{% url 'lista_perfis' %}">👥 Ver Todos os Perfis</a></p>
+<p><a href="/admin/usuarios/perfil/">⚙️ Perfil admin (admin)</a></p>
 
 <form action="{% url 'excluir_perfil' perfil.pk %}" method="post">
   {% csrf_token %}

@@ -3,47 +3,15 @@
 {% block title %}Gráfico de Peso{% endblock %}
 
 {% block content %}
-<h2>Evolução de Peso - {{ perfil.nome }}</h2>
+<h2>Histórico de Peso de {{ perfil.nome }}</h2>
 
-<canvas id="graficoPeso"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('graficoPeso');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: {{ datas|safe }},
-      datasets: [{
-        label: 'Peso (kg)',
-        data: {{ pesos|safe }},
-        borderColor: 'blue',
-        fill: false,
-        tension: 0.3
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: { y: { beginAtZero: false } }
-    }
-  });
-</script>
-
-<hr>
-<h3>Histórico Registrado</h3>
-<table border="1" cellpadding="6">
-  <tr>
-    <th>Data</th>
-    <th>Peso (kg)</th>
-  </tr>
-  {% for item in historico %}
-  <tr>
-    <td>{{ item.data|date:"d/m/Y" }}</td>
-    <td>{{ item.peso }}</td>
-  </tr>
+<ul>
+  {% for registro in historico %}
+    <li>{{ registro.data }} — {{ registro.peso }} kg</li>
   {% empty %}
-  <tr>
-    <td colspan="2">Nenhum histórico ainda.</td>
-  </tr>
+    <li>Nenhum registro de peso encontrado.</li>
   {% endfor %}
-</table>
+</ul>
+
+<p><a href="{% url 'perfil_detalhe' perfil.pk %}">🔙 Voltar ao Perfil</a></p>
 {% endblock %}
