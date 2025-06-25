@@ -8,13 +8,18 @@ NIVEL_ATIVIDADE = [
     ('1.9', 'Extremamente ativo'),
 ]
 
-FATOR_PROTEINA = [
-    ('0.8', 'Sedentário'),
-    ('1.2', 'Ativo Leve'),
-    ('1.4', 'Endurance'),
-    ('1.6', 'Força (iniciado)'),
-    ('2.2', 'Força (avançado)'),
-]
+
+def proteina_diaria(self):
+    # Mapeia o nível de atividade para o fator de proteína
+    mapa_fator = {
+        '1.2': 0.8,
+        '1.375': 1.2,
+        '1.55': 1.4,
+        '1.725': 1.6,
+        '1.9': 2.0,
+    }
+    fator = mapa_fator.get(self.nivel_atividade, 1.2)
+    return round(self.peso_ideal() * fator, 2)
 
 class Perfil(models.Model):
     nome = models.CharField(max_length=100)
@@ -24,7 +29,6 @@ class Perfil(models.Model):
     peso = models.FloatField(help_text="Em kg")
     percentual_gordura = models.FloatField(null=True, blank=True)
     nivel_atividade = models.CharField(max_length=5, choices=NIVEL_ATIVIDADE, default='1.2')
-    fator_proteina = models.CharField(max_length=4, choices=FATOR_PROTEINA, default='1.2')
 
     def __str__(self):
         return self.nome

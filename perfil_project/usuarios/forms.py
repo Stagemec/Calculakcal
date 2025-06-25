@@ -11,8 +11,7 @@ class PerfilForm(forms.ModelForm):
         model = Perfil
         fields = '__all__'
         widgets = {
-            'nivel_atividade': forms.Select(),
-            'fator_proteina': forms.Select()
+            'nivel_atividade': forms.Select()
         }
 
 class MetaPesoForm(forms.Form):

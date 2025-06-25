@@ -18,6 +18,15 @@
   <li><strong>Proteína diária:</strong> {{ perfil.proteina_diaria }} g</li>
 </ul>
 
+<li>
+    <strong>Proteína diária recomendada:</strong> {{ perfil.proteina_diaria }} g
+    <br>
+    <small style="color: gray;">
+      Baseado no seu nível de atividade 
+      <strong>"{{ perfil.get_nivel_atividade_display }}"</strong>, este valor foi estimado automaticamente.
+    </small>
+</li>
+
 <hr>
 <p><a href="{% url 'atualizar_peso' perfil.pk %}">📥 Atualizar Peso</a></p>
 <p><a href="{% url 'calcular_meta' perfil.pk %}">🎯 Definir Meta</a></p>

@@ -16,14 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect
+from usuarios import views  # importa a view home corretamente
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
-
-urlpatterns = [
-    path('', lambda request: redirect('perfil_detalhe'), name='home'),
-    path('admin/', admin.site.urls),
-    path('', include('usuarios.urls')),
+    path('', views.home, name='home'),  # redireciona para o perfil ou criação
+    path('', include('usuarios.urls')),  # inclui as rotas da app 'usuarios'
 ]
