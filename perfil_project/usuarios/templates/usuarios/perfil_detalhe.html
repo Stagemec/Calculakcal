@@ -14,30 +14,44 @@
 <div style="max-width: 600px; height: 300px; margin: auto;">
   <canvas id="graficoPeso">
     
-        <h3>📈 Evolução do Peso</h3>
-    <canvas id="graficoPeso" width="70%" height="50%"></canvas>
-
+    <h3>📈 Evolução Corporal</h3>
+    <div style="max-width: 700px; height: 350px; margin: auto;">
+      <canvas id="graficoPeso"></canvas>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      const labels = [{% for registro in historico %}'{{ registro.data }}',{% endfor %}];
-      const pesos = [{% for registro in historico %}{{ registro.peso }},{% endfor %}];
-
-      console.log("Labels:", labels);
-      console.log("Pesos:", pesos);
-
       const ctx = document.getElementById('graficoPeso').getContext('2d');
       const graficoPeso = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: labels,
-          datasets: [{
-            label: 'Peso (kg)',
-            data: pesos,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            tension: 0.3,
-            fill: true,
-          }]
+          labels: {{ datas|safe }},
+          datasets: [
+            {
+              label: 'Peso (kg)',
+              data: {{ pesos|safe }},
+              borderColor: 'rgba(75, 192, 192, 1)',
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              tension: 0.3,
+              fill: false,
+            },
+            {
+              label: 'IMC',
+              data: {{ imcs|safe }},
+              borderColor: 'rgba(255, 99, 132, 1)',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              tension: 0.3,
+              fill: false,
+            },
+            {
+              label: 'Gordura (%)',
+              data: {{ gorduras|safe }},
+              borderColor: 'rgba(255, 206, 86, 1)',
+              backgroundColor: 'rgba(255, 206, 86, 0.2)',
+              tension: 0.3,
+              fill: false,
+            }
+          ]
         },
         options: {
           responsive: true,

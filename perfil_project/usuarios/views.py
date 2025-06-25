@@ -7,7 +7,20 @@ from django.shortcuts import redirect
 def perfil_detalhe(request, pk):
     perfil = get_object_or_404(Perfil, pk=pk)
     historico = perfil.historicos.order_by('data')
-    return render(request, 'usuarios/perfil_detalhe.html', {'perfil': perfil, 'historico': historico})
+
+    datas = [h.data.strftime('%d/%m') for h in historico]
+    pesos = [h.peso for h in historico]
+    imcs = [round(h.peso / (perfil.altura ** 2), 2) for h in historico]
+    gorduras = [perfil.percentual_gordura or 0 for h in historico]  # ou use um campo histórico se tiver
+
+    return render(request, 'usuarios/perfil_detalhe.html', {
+        'perfil': perfil,
+        'historico': historico,
+        'datas': datas,
+        'pesos': pesos,
+        'imcs': imcs,
+        'gorduras': gorduras,
+    })
 
 
 def criar_perfil(request):
@@ -66,10 +79,16 @@ def atualizar_peso(request, pk):
     perfil = get_object_or_404(Perfil, pk=pk)
     if request.method == 'POST':
         novo_peso = float(request.POST.get('peso'))
+        nova_gordura = request.POST.get('percentual_gordura')
+
         perfil.peso = novo_peso
+        if nova_gordura:
+            perfil.percentual_gordura = float(nova_gordura)
         perfil.save()
-        PesoHistorico.objects.create(perfil=perfil, peso=novo_peso)  # 🎯 Registro automático!
-        return redirect('perfil_detalhe')
+
+        PesoHistorico.objects.create(perfil=perfil, peso=novo_peso)
+        return redirect('perfil_detalhe', pk=perfil.pk)
+
     return render(request, 'usuarios/atualizar_peso.html', {'perfil': perfil})
 
 def excluir_perfil(request, pk):
