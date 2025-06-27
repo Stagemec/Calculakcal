@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.perfil_detalhe, name='perfil_detalhe'),
-    path('perfil/<int:pk>/', views.home, name='home'),
+    path('meu-perfil/', views.redirecionar_para_perfil, name='meu_perfil'),
     path('criar/', views.criar_perfil, name='criar_perfil'),
     path('atualizar/<int:pk>/', views.atualizar_peso, name='atualizar_peso'),
     path('meta/<int:pk>/', views.calcular_meta, name='calcular_meta'),

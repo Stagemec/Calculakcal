@@ -128,3 +128,8 @@ def home(request):
 def lista_perfis(request):
     perfis = Perfil.objects.all()
     return render(request, 'usuarios/lista_perfis.html', {'perfis': perfis})
+
+
+def redirecionar_para_perfil(request):
+    perfil = Perfil.objects.get(usuario=request.user)
+    return redirect('perfil_detalhe', id=perfil.id)
