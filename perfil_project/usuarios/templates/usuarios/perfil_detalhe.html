@@ -85,7 +85,16 @@
     </small>
 </li>
 
+<h3>Metas Definidas</h3>
+{% if meta %}
+  <p>Última meta: {{ meta.objetivo }}</p>
+  <p>Resultado alcançado: {{ meta.resultado_alcancado }}</p>
+{% else %}
+  <p>Nenhuma meta registrada.</p>
+{% endif %}
+
 <hr>
+<p><a href="{% url 'lista_perfis' perfil.pk %}">📥 Lista perfis</a></p>
 <p><a href="{% url 'atualizar_peso' perfil.pk %}">📥 Atualizar Peso</a></p>
 <p><a href="{% url 'calcular_meta' perfil.pk %}">🎯 Definir Meta</a></p>
 <p><a href="{% url 'criar_perfil' %}">➕ Criar Novo Perfil</a></p>

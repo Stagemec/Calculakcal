@@ -105,8 +105,6 @@ def home(request):
         return redirect('perfil_detalhe', pk=perfil.pk)  # ✅ necessário passar o ID
     return redirect('criar_perfil')
 
-from django.shortcuts import render, get_object_or_404
-from .models import Perfil
 
 def lista_perfis(request):
     perfis = Perfil.objects.all()
