@@ -85,13 +85,15 @@
     </small>
 </li>
 
-<h3>Metas Definidas</h3>
-{% if meta %}
-  <p>Última meta: {{ meta.objetivo }}</p>
-  <p>Resultado alcançado: {{ meta.resultado_alcancado }}</p>
-{% else %}
-  <p>Nenhuma meta registrada.</p>
-{% endif %}
+<h3>Metas do Perfil</h3>
+<ul>
+  {% for meta in metas %}
+    <li>{{ meta.objetivo }} — Resultado: {{ meta.resultado }}</li>
+  {% empty %}
+    <li>Nenhuma meta definida.</li>
+  {% endfor %}
+</ul>
+
 
 <hr>
 <p><a href="{% url 'lista_perfis' perfil.pk %}">📥 Lista perfis</a></p>
