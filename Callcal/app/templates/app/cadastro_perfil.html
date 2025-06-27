@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Cadastrar Perfil</title></head>
+<body>
+  <h1>Cadastrar Novo Perfil</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+  </form>
+  <a href="{% url 'boas_vindas' %}">Voltar</a>
+</body>
+</html>

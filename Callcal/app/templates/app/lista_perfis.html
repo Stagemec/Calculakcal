@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Perfis</title></head>
+<body>
+  <h1>Lista de Perfis</h1>
+  
+  <ul>
+    {% for perfil in perfis %}
+      <li>
+        {{ perfil.nome }} -
+        <a href="{% url 'detalhes_perfil' perfil.id %}">Visualizar</a>
+      </li>
+    {% endfor %}
+  </ul>
+  
+  <a href="{% url 'boas_vindas' %}">Voltar</a>
+</body>
+</html>

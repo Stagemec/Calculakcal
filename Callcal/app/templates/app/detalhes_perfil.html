@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Perfil</title>
+</head>
+<body>
+    <h1>Detalhes de {{ perfil.nome }}</h1>
+
+    <h2>Informações Básicas</h2>
+    <ul>
+        <li>Idade: {{ perfil.idade }}</li>
+        <li>Sexo: {{ perfil.get_sexo_display }}</li>
+        <li>Altura: {{ perfil.altura }} m</li>
+        <li>Peso atual: {{ peso_atual }} kg</li>
+    </ul>
+
+
+    <h2>Histórico Corporal</h2>
+<canvas id="graficoHistorico" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = {{ grafico_labels|safe }};
+  const dataPeso = {{ grafico_pesos|safe }};
+  const dataGordura = {{ grafico_gordura|safe }};
+  const dataEsperado = {{ grafico_esperado|safe }};
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Peso (kg)',
+        data: dataPeso,
+        borderColor: 'blue',
+        backgroundColor: 'rgba(0, 0, 255, 0.1)',
+        tension: 0.2
+      },
+      {
+        label: 'Gordura (%)',
+        data: dataGordura,
+        borderColor: 'orange',
+        backgroundColor: 'rgba(255, 165, 0, 0.1)',
+        tension: 0.2,
+        yAxisID: 'y1'
+      },
+      {
+        label: 'Peso Esperado',
+        data: dataEsperado,
+        borderColor: 'green',
+        borderDash: [4, 4],
+        pointRadius: 3,
+        tension: 0,
+        fill: false
+      }
+    ]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      stacked: false,
+      scales: {
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: 'Peso (kg)' }
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          title: { display: true, text: 'Gordura (%)' }
+        }
+      }
+    }
+  };
+
+  new Chart(document.getElementById('graficoHistorico'), config);
+</script>
+
+
+
+
+
+
+    <h2>Resultados do Perfil</h2>
+<ul>
+    <li><strong>IMC:</strong> {{ imc|floatformat:2 }} - <em>{{ imc_status }}</em></li>
+    <li><strong>Peso Ideal (IMC 20):</strong> {{ peso_ideal|floatformat:2 }} kg</li>
+    <li><strong>TMB (Taxa Metabólica Basal):</strong> {{ tmb|floatformat:0 }} kcal/dia</li>
+    <li><strong>Meta mensal:</strong> {{ meta_kg }} kg {% if meta_kg < 0 %}(perda){% elif meta_kg > 0 %}(ganho){% else %}(manutenção){% endif %}</li>
+    <li><strong>Meta calórica diária da meta:</strong> {{ meta_kcal_dia|floatformat:0 }} kcal/dia</li>
+    <li><strong>Meta total de ingestão calórica diária:</strong> {{ meta_total_kcal_dia|floatformat:0 }} kcal/dia</li>
+    <li><strong>Gasto diário ajustado (TMB x atividade):</strong> {{ tmb_ajustado|floatformat:0 }} kcal/dia</li>
+    <li><strong>Consumo ideal de proteína:</strong> {{ proteina|floatformat:0 }} g/dia</li>
+</ul>
+
+<div style="margin-top: 1em; padding: 1em; background-color: #fffbe6; border-left: 5px solid #f1c40f;">
+    <p><strong>Aviso:</strong> Valores de ingestão calórica abaixo da TMB podem causar fadiga, indisposição e prejudicar funções vitais.</p>
+    <p>Para melhores resultados e segurança, procure um(a) nutricionista ou profissional de saúde para uma dieta personalizada e balanceada.</p>
+</div>
+
+
+    <a href="{% url 'registrar_atualizacao' perfil.id %}">Registrar novo peso | meta </a>
+<br>
+    <a href="{% url 'lista_perfis' %}">Voltar para lista de perfis</a>
+</body>
+</html>
