@@ -60,26 +60,6 @@ def calcular_meta(request, pk):
 
     return render(request, 'usuarios/calcular_meta.html', {'perfil': perfil, 'form': form, 'resultado': resultado})
 
-def definir_meta(request):
-    if request.method == 'POST':
-        form = DefinirMetaForm(request.POST)
-        if form.is_valid():
-            meta = form.save(commit=False)
-            meta.perfil = Perfil.objects.get(usuario=request.user)
-            meta.save()
-            return redirect('perfil_detalhe', id=meta.perfil.id)
-    else:
-        form = DefinirMetaForm()
-    return render(request, 'definir_meta.html', {'form': form})
-
-def perfil_detalhe(request, id):
-    perfil = get_object_or_404(Perfil, id=id)
-    metas = DefinirMeta.objects.filter(perfil=perfil)
-    return render(request, 'detalhes_perfil.html', {
-        'perfil': perfil,
-        'metas': metas
-    })
-
 def grafico_peso(request, pk):
     perfil = get_object_or_404(Perfil, pk=pk)
     historico = perfil.historicos.order_by('data')
