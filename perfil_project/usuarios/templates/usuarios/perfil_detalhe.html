@@ -88,9 +88,7 @@
 <hr>
 <p><a href="{% url 'atualizar_peso' perfil.pk %}">📥 Atualizar Peso</a></p>
 <p><a href="{% url 'calcular_meta' perfil.pk %}">🎯 Definir Meta</a></p>
-<p><a href="{% url 'grafico_peso' perfil.pk %}">📊 Ver Histórico e Gráfico</a></p>
 <p><a href="{% url 'criar_perfil' %}">➕ Criar Novo Perfil</a></p>
-<p><a href="{% url 'lista_perfis' %}">👥 Ver Todos os Perfis</a></p>
 <p><a href="/admin/usuarios/perfil/">⚙️ Perfil admin (admin)</a></p>
 
 <form action="{% url 'excluir_perfil' perfil.pk %}" method="post">

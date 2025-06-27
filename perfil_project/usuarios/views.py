@@ -4,6 +4,7 @@ from .models import Perfil, PesoHistorico
 from .forms import PerfilForm
 from django.shortcuts import redirect
 
+
 def perfil_detalhe(request, pk):
     perfil = get_object_or_404(Perfil, pk=pk)
     historico = perfil.historicos.order_by('data')
