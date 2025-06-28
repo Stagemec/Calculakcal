@@ -1,6 +1,4 @@
 # Calculakcal
-Perfeito, obrigado pelo esclarecimento! Com isso, aqui está a versão revisada do artigo técnico, refletindo com precisão o público-alvo e a proposta do projeto Calculakcal:
-
 🥗 Calculakcal: Uma Calculadora de Calorias para Bem-Estar e Objetivos Pessoais
 📌 Introdução
 O Calculakcal é uma aplicação web desenvolvida com o framework Django, que tem como objetivo auxiliar qualquer pessoa — seja individualmente ou em grupo, como famílias — a calcular suas necessidades calóricas diárias com base em dados pessoais e metas de saúde. A proposta é oferecer uma ferramenta acessível, intuitiva e personalizável para quem deseja emagrecer, manter o peso ou ganhar massa corporal.
