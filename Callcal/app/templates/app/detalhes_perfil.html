@@ -95,10 +95,10 @@
     <li><strong>IMC:</strong> {{ imc|floatformat:2 }} - <em>{{ imc_status }}</em></li>
     <li><strong>Peso Ideal (IMC 20):</strong> {{ peso_ideal|floatformat:2 }} kg</li>
     <li><strong>TMB (Taxa Metabólica Basal):</strong> {{ tmb|floatformat:0 }} kcal/dia</li>
+    <li><strong>Gasto diário ajustado (TMB x atividade):</strong> {{ tmb_ajustado|floatformat:0 }} kcal/dia</li>
     <li><strong>Meta mensal:</strong> {{ meta_kg }} kg {% if meta_kg < 0 %}(perda){% elif meta_kg > 0 %}(ganho){% else %}(manutenção){% endif %}</li>
     <li><strong>Meta calórica diária da meta:</strong> {{ meta_kcal_dia|floatformat:0 }} kcal/dia</li>
     <li><strong>Meta total de ingestão calórica diária:</strong> {{ meta_total_kcal_dia|floatformat:0 }} kcal/dia</li>
-    <li><strong>Gasto diário ajustado (TMB x atividade):</strong> {{ tmb_ajustado|floatformat:0 }} kcal/dia</li>
     <li><strong>Consumo ideal de proteína:</strong> {{ proteina|floatformat:0 }} g/dia</li>
 </ul>
 
@@ -107,9 +107,20 @@
     <p>Para melhores resultados e segurança, procure um(a) nutricionista ou profissional de saúde para uma dieta personalizada e balanceada.</p>
 </div>
 
+<button onclick="location.href='{% url 'registrar_atualizacao' perfil.id %}'">
+  Registrar peso | meta | atividade 
+</button>
 
-    <a href="{% url 'registrar_atualizacao' perfil.id %}">Registrar novo peso | meta </a>
-<br>
-    <a href="{% url 'lista_perfis' %}">Voltar para lista de perfis</a>
+<button onclick="location.href='{% url 'lista_perfis' %}'">
+  Voltar para lista de perfis
+</button>
+
+<form action="{% url 'excluir_perfil' perfil.id %}" method="post" style="display:inline" 
+      onsubmit="return confirm('Tem certeza que deseja excluir este perfil? Esta ação não pode ser desfeita.')">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Excluir Perfil</button>
+</form>
+
+
 </body>
 </html>

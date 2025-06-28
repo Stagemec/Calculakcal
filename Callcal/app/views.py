@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from .models import Perfil
 import json
 from .forms import PerfilCadastroForm
@@ -138,3 +139,9 @@ def editar_perfil(request, pk):
     else:
         form = PerfilAtualizacaoForm(instance=perfil)
     return render(request, 'app/editar_perfil.html', {'form': form, 'perfil': perfil})
+
+@require_POST
+def excluir_perfil(request, perfil_id):
+    perfil = get_object_or_404(Perfil, id=perfil_id)
+    perfil.delete()
+    return redirect('lista_perfis')
