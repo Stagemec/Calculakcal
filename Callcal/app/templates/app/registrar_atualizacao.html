@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Atualizar Peso</title>
-</head>
-<body>
-    <h1>Atualizar dados de {{ perfil.nome }}</h1>
+<h1>Registrar Atualização para {{ perfil.nome }}</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar</button>
-    </form>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Atualizar Peso</legend>
+        {{ form_historico.as_p }}
+    </fieldset>
+    <fieldset>
+        <legend>Atualizar Nível de Atividade Física</legend>
+        {{ form_atividade.as_p }}
+    </fieldset>
 
-    <a href="{% url 'detalhes_perfil' perfil.id %}">Voltar ao perfil</a>
-</body>
-</html>
+    <button type="submit">Salvar Atualizações</button>
+</form>
+
+<a href="{% url 'detalhes_perfil' perfil.id %}">Voltar para detalhes do perfil</a>

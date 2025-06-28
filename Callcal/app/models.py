@@ -33,7 +33,7 @@ class Perfil(models.Model):
         else:
             return 655 + (9.6 * self.peso_atual()) + (1.8 * self.altura * 100) - (4.7 * self.idade)
 
-    def proteina_diaria(self):
+    def ideal(self):
         fator = 2.0  # sujeitos ativos
         return self.peso_ideal() * fator
 

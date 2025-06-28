@@ -1,0 +1,7 @@
+<h1>Editar Perfil de {{ perfil.nome }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar Alterações</button>
+</form>
+<a href="{% url 'detalhes_perfil' perfil.id %}">Cancelar</a>

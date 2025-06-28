@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Perfil
-from .forms import PerfilForm
-from .forms import HistoricoPesoForm
 import json
+from .forms import PerfilCadastroForm
+from .forms import PerfilAtualizacaoForm, PerfilAtividadeForm, HistoricoPesoForm
 from datetime import timedelta
+
 
 def boas_vindas(request):
     return render(request, 'app/boas_vindas.html')
@@ -15,12 +15,12 @@ def lista_perfis(request):
 
 def cadastro_perfil(request):
     if request.method == 'POST':
-        form = PerfilForm(request.POST)
+        form = PerfilCadastroForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('lista_perfis')
     else:
-        form = PerfilForm()
+        form = PerfilCadastroForm()
     return render(request, 'app/cadastro_perfil.html', {'form': form})
 
 
@@ -97,31 +97,44 @@ def detalhes_perfil(request, perfil_id):
     return render(request, 'app/detalhes_perfil.html', contexto)
 
     
-
 def registrar_atualizacao(request, perfil_id):
     perfil = get_object_or_404(Perfil, id=perfil_id)
 
     if request.method == 'POST':
-        form = HistoricoPesoForm(request.POST)
-        if form.is_valid():
-            historico = form.save(commit=False)
+        form_historico = HistoricoPesoForm(request.POST)
+        form_atividade = PerfilAtividadeForm(request.POST, instance=perfil)
+
+        if form_historico.is_valid() and form_atividade.is_valid():
+            historico = form_historico.save(commit=False)
             historico.perfil = perfil
 
-            # pegar o último peso registrado
             anterior = perfil.historicos.order_by('-data').first()
             if anterior:
                 historico.peso_esperado = anterior.peso + historico.meta_kg
             else:
-                historico.peso_esperado = historico.peso  # primeiro registro
+                historico.peso_esperado = historico.peso
 
             historico.save()
+            form_atividade.save()
+
             return redirect('detalhes_perfil', perfil_id=perfil.id)
     else:
-        form = HistoricoPesoForm()
+        form_historico = HistoricoPesoForm()
+        form_atividade = PerfilAtividadeForm(instance=perfil)
 
     return render(request, 'app/registrar_atualizacao.html', {
         'perfil': perfil,
-        'form': form
+        'form_historico': form_historico,
+        'form_atividade': form_atividade,
     })
 
-
+def editar_perfil(request, pk):
+    perfil = get_object_or_404(Perfil, pk=pk)
+    if request.method == 'POST':
+        form = PerfilAtualizacaoForm(request.POST, instance=perfil)
+        if form.is_valid():
+            form.save()
+            return redirect('detalhes_perfil', perfil.id)
+    else:
+        form = PerfilAtualizacaoForm(instance=perfil)
+    return render(request, 'app/editar_perfil.html', {'form': form, 'perfil': perfil})

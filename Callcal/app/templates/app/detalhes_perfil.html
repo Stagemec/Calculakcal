@@ -14,6 +14,10 @@
         <li>Peso atual: {{ peso_atual }} kg</li>
     </ul>
 
+    <a href="{% url 'editar_perfil' perfil.id %}">
+      <button>Atualizar Dados do Perfil</button>
+    </a>    
+
 
     <h2>Histórico Corporal</h2>
 <canvas id="graficoHistorico" width="400" height="200"></canvas>
