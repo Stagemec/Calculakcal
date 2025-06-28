@@ -1,18 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head><title>Perfis</title></head>
-<body>
-  <h1>Lista de Perfis</h1>
-  
-  <ul>
-    {% for perfil in perfis %}
-      <li>
-        {{ perfil.nome }} -
-        <a href="{% url 'detalhes_perfil' perfil.id %}">Visualizar</a>
-      </li>
-    {% endfor %}
-  </ul>
-  
-  <a href="{% url 'boas_vindas' %}">Voltar</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Lista de Perfis{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>Perfis Cadastrados</h2>
+    </div>
+    <div class="card-body">
+      {% if perfis %}
+        <ul class="list-group">
+          {% for perfil in perfis %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ perfil.nome }}
+              <a href="{% url 'detalhes_perfil' perfil.id %}" class="btn btn-sm btn-primary">Visualizar</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">Nenhum perfil cadastrado ainda.</p>
+      {% endif %}
+
+      <div class="mt-4">
+        <a href="{% url 'boas_vindas' %}" class="btn btn-secondary">Voltar</a>
+        <a href="{% url 'cadastro_perfil' %}" class="btn btn-success">Cadastrar Novo Perfil</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

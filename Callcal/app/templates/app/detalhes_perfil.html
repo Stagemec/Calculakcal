@@ -1,26 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalhes do Perfil</title>
-</head>
-<body>
-    <h1>Detalhes de {{ perfil.nome }}</h1>
+{% extends "base.html" %}
 
-    <h2>Informações Básicas</h2>
-    <ul>
-        <li>Idade: {{ perfil.idade }}</li>
-        <li>Sexo: {{ perfil.get_sexo_display }}</li>
-        <li>Altura: {{ perfil.altura }} m</li>
-        <li>Peso atual: {{ peso_atual }} kg</li>
-    </ul>
+{% block title %}Detalhes de {{ perfil.nome }}{% endblock %}
 
-    <a href="{% url 'editar_perfil' perfil.id %}">
-      <button>Atualizar Dados do Perfil</button>
-    </a>    
+{% block content %}
+<h1>Detalhes de {{ perfil.nome }}</h1>
 
+<h2>Informações Básicas</h2>
+<ul class="list-group mb-4">
+    <li class="list-group-item"><strong>Idade:</strong> {{ perfil.idade }}</li>
+    <li class="list-group-item"><strong>Sexo:</strong> {{ perfil.get_sexo_display }}</li>
+    <li class="list-group-item"><strong>Altura:</strong> {{ perfil.altura }} m</li>
+    <li class="list-group-item"><strong>Peso atual:</strong> {{ peso_atual }} kg</li>
+</ul>
 
-    <h2>Histórico Corporal</h2>
-<canvas id="graficoHistorico" width="400" height="200"></canvas>
+<a href="{% url 'editar_perfil' perfil.id %}" class="btn btn-primary mb-3">Atualizar Dados do Perfil</a>
+
+<h2>Histórico Corporal</h2>
+<canvas id="graficoHistorico" width="400" height="200" class="mb-4"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -85,42 +81,42 @@
   new Chart(document.getElementById('graficoHistorico'), config);
 </script>
 
-
-
-
-
-
-    <h2>Resultados do Perfil</h2>
-<ul>
-    <li><strong>IMC:</strong> {{ imc|floatformat:2 }} - <em>{{ imc_status }}</em></li>
-    <li><strong>Peso Ideal (IMC 20):</strong> {{ peso_ideal|floatformat:2 }} kg</li>
-    <li><strong>TMB (Taxa Metabólica Basal):</strong> {{ tmb|floatformat:0 }} kcal/dia</li>
-    <li><strong>Gasto diário ajustado (TMB x atividade):</strong> {{ tmb_ajustado|floatformat:0 }} kcal/dia</li>
-    <li><strong>Meta mensal:</strong> {{ meta_kg }} kg {% if meta_kg < 0 %}(perda){% elif meta_kg > 0 %}(ganho){% else %}(manutenção){% endif %}</li>
-    <li><strong>Meta calórica diária da meta:</strong> {{ meta_kcal_dia|floatformat:0 }} kcal/dia</li>
-    <li><strong>Meta total de ingestão calórica diária:</strong> {{ meta_total_kcal_dia|floatformat:0 }} kcal/dia</li>
-    <li><strong>Consumo ideal de proteína:</strong> {{ proteina|floatformat:0 }} g/dia</li>
+<h2>Resultados do Perfil</h2>
+<ul class="list-group mb-4">
+    <li class="list-group-item"><strong>IMC:</strong> {{ imc|floatformat:2 }} - <em>{{ imc_status }}</em></li>
+    <li class="list-group-item"><strong>Peso Ideal (IMC 20):</strong> {{ peso_ideal|floatformat:2 }} kg</li>
+    <li class="list-group-item"><strong>TMB (Taxa Metabólica Basal):</strong> {{ tmb|floatformat:0 }} kcal/dia</li>
+    <li class="list-group-item"><strong>Gasto diário ajustado (TMB x atividade):</strong> {{ tmb_ajustado|floatformat:0 }} kcal/dia</li>
+    <li class="list-group-item"><strong>Meta mensal:</strong> {{ meta_kg }} kg
+        {% if meta_kg < 0 %}(perda)
+        {% elif meta_kg > 0 %}(ganho)
+        {% else %}(manutenção)
+        {% endif %}
+    </li>
+    <li class="list-group-item"><strong>Meta calórica diária da meta:</strong> {{ meta_kcal_dia|floatformat:0 }} kcal/dia</li>
+    <li class="list-group-item"><strong>Meta total de ingestão calórica diária:</strong> {{ meta_total_kcal_dia|floatformat:0 }} kcal/dia</li>
+    <li class="list-group-item"><strong>Consumo ideal de proteína:</strong> {{ proteina|floatformat:0 }} g/dia</li>
 </ul>
 
-<div style="margin-top: 1em; padding: 1em; background-color: #fffbe6; border-left: 5px solid #f1c40f;">
-    <p><strong>Aviso:</strong> Valores de ingestão calórica abaixo da TMB podem causar fadiga, indisposição e prejudicar funções vitais.</p>
-    <p>Para melhores resultados e segurança, procure um(a) nutricionista ou profissional de saúde para uma dieta personalizada e balanceada.</p>
+<div class="alert alert-warning" role="alert">
+    <strong>Aviso:</strong> Valores de ingestão calórica abaixo da TMB podem causar fadiga, indisposição e prejudicar funções vitais.<br>
+    Para melhores resultados e segurança, procure um(a) nutricionista ou profissional de saúde para uma dieta personalizada e balanceada.
 </div>
 
-<button onclick="location.href='{% url 'registrar_atualizacao' perfil.id %}'">
-  Registrar peso | meta | atividade 
-</button>
+<div class="mb-3">
+  <a href="{% url 'registrar_atualizacao' perfil.id %}" class="btn btn-success me-2">
+    Registrar peso | meta | atividade
+  </a>
 
-<button onclick="location.href='{% url 'lista_perfis' %}'">
-  Voltar para lista de perfis
-</button>
+  <a href="{% url 'lista_perfis' %}" class="btn btn-secondary me-2">
+    Voltar para lista de perfis
+  </a>
 
-<form action="{% url 'excluir_perfil' perfil.id %}" method="post" style="display:inline" 
-      onsubmit="return confirm('Tem certeza que deseja excluir este perfil? Esta ação não pode ser desfeita.')">
+  <form action="{% url 'excluir_perfil' perfil.id %}" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este perfil? Esta ação não pode ser desfeita.')">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Excluir Perfil</button>
-</form>
-
-
-</body>
-</html>
+    <button type="submit" class="btn btn-danger">
+      Excluir Perfil
+    </button>
+  </form>
+</div>
+{% endblock %}

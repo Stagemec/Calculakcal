@@ -1,7 +1,21 @@
-<h1>Editar Perfil de {{ perfil.nome }}</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar Alterações</button>
-</form>
-<a href="{% url 'detalhes_perfil' perfil.id %}">Cancelar</a>
+{% extends "base.html" %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Perfil de {{ perfil.nome }}</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success mt-2">Salvar Alterações</button>
+                <a href="{% url 'detalhes_perfil' perfil.id %}" class="btn btn-secondary mt-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

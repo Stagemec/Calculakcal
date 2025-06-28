@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head><title>Bem-vindo</title></head>
-<body>
-  <h1>Bem-vindo ao App de Monitoramento Corporal</h1>
-  <a href="{% url 'lista_perfis' %}">Selecionar Perfil</a><br>
-  <a href="{% url 'cadastro_perfil' %}">Cadastrar Novo Perfil</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Bem-vindo{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Bem-vindo ao App de Monitoramento Corporal</h1>
+
+  <a href="{% url 'lista_perfis' %}" class="btn btn-primary mb-2">Selecionar Perfil</a><br>
+  <a href="{% url 'cadastro_perfil' %}" class="btn btn-success">Cadastrar Novo Perfil</a>
+{% endblock %}

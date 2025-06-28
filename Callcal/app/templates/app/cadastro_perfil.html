@@ -1,13 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head><title>Cadastrar Perfil</title></head>
-<body>
-  <h1>Cadastrar Novo Perfil</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
-  </form>
-  <a href="{% url 'boas_vindas' %}">Voltar</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Perfil{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Cadastrar Novo Perfil</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary mt-2">Salvar</button>
+                <a href="{% url 'boas_vindas' %}" class="btn btn-secondary mt-2">Voltar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

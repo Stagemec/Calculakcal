@@ -1,17 +1,29 @@
-<h1>Registrar Atualização para {{ perfil.nome }}</h1>
+{% extends "base.html" %}
 
-<form method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend>Atualizar Peso</legend>
+{% block title %}Atualizar Perfil{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h1 class="card-title">Registrar Atualização para {{ perfil.nome }}</h1>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      <fieldset class="mb-4">
+        <legend class="h5">Atualizar Peso</legend>
         {{ form_historico.as_p }}
-    </fieldset>
-    <fieldset>
-        <legend>Atualizar Nível de Atividade Física</legend>
+      </fieldset>
+
+      <fieldset class="mb-4">
+        <legend class="h5">Atualizar Nível de Atividade Física</legend>
         {{ form_atividade.as_p }}
-    </fieldset>
+      </fieldset>
 
-    <button type="submit">Salvar Atualizações</button>
-</form>
-
-<a href="{% url 'detalhes_perfil' perfil.id %}">Voltar para detalhes do perfil</a>
+      <button type="submit" class="btn btn-success">Salvar Atualizações</button>
+      <a href="{% url 'detalhes_perfil' perfil.id %}" class="btn btn-secondary ms-2">Voltar para detalhes do perfil</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
