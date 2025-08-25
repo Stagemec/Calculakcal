@@ -40,17 +40,17 @@
 
 ```bash
 git clone https://github.com/Stagemec/Calculakcal.git
-cd Calculakcal
+cd Calculakca```
 
 
 
 2. Criar ambiente virtual (opcional, mas recomendado)
-python -m venv venv
+```python -m venv venv```
 
 Ativar o ambiente virtual:
 
-Windows:
-venv\Scripts\activate
+```Windows:
+venv\Scripts\activate```
 
 
 Linux/MacOS:
