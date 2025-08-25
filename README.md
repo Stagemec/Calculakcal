@@ -45,7 +45,8 @@ cd Calculakca```
 
 
 2. Criar ambiente virtual (opcional, mas recomendado)
-```python -m venv venv```
+```bash
+python -m venv venv```
 
 Ativar o ambiente virtual:
 
