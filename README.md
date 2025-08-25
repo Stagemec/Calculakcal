@@ -38,31 +38,33 @@
 
 ### 1. Clonar o repositório
 
+  ```bash
+  git clone https://github.com/Stagemec/Calculakcal.git
+  cd Calculakca
+  ```
+
+
+
+### 2. Criar ambiente virtual (opcional, mas recomendado)
 ```bash
-git clone https://github.com/Stagemec/Calculakcal.git
-cd Calculakca```
-
-
-
-2. Criar ambiente virtual (opcional, mas recomendado)
-```bash
-python -m venv venv```
+python -m venv venv
+```
 
 Ativar o ambiente virtual:
 
-```Windows:
-venv\Scripts\activate```
-
-
+Windows:
+```bash
+venv\Scripts\activate
+```
 Linux/MacOS:
-source venv/bin/activate
-
+```bash
 source venv/bin/activate
 pip install -r requirements.txt
-
+```
 Ou, para instalação mínima:
+```bash
 pip install django
-
+```
 ---
 4. Aplicar migrações
 python manage.py migrate
@@ -70,11 +72,13 @@ python manage.py migrate
 6. Acessar no navegador
 
 Abra seu navegador e acesse:
+```ip
 http://127.0.0.1:8000/
-
+```
 ---
 📁 Estrutura do Projet:
 
+```files
 Calculakcal/
 ├── calculadora/           # Aplicação principal
 │   ├── migrations/        # Migrações do banco
@@ -86,7 +90,7 @@ Calculakcal/
 ├── manage.py              # Gerenciador do Django
 ├── static/                # Arquivos estáticos (CSS, JS, imagens)
 └── README.md              # Documentação do projeto
-
+```
 ---
 🌱 Melhorias Futuras
 
