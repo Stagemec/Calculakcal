@@ -42,9 +42,73 @@
 git clone https://github.com/Stagemec/Calculakcal.git
 cd Calculakcal
 
+
+
+2. Criar ambiente virtual (opcional, mas recomendado)
+python -m venv venv
+
+Ativar o ambiente virtual:
+
+Windows:
+venv\Scripts\activate
+
+
+Linux/MacOS:
+source venv/bin/activate
+
+source venv/bin/activate
+pip install -r requirements.txt
+
+Ou, para instalação mínima:
+pip install django
+
+---
+4. Aplicar migrações
+python manage.py migrate
+
+6. Acessar no navegador
+
+Abra seu navegador e acesse:
+http://127.0.0.1:8000/
+
+---
+📁 Estrutura do Projet:
+
+Calculakcal/
+├── calculadora/           # Aplicação principal
+│   ├── migrations/        # Migrações do banco
+│   ├── models.py          # Modelos de dados
+│   ├── views.py           # Regras de negócio
+│   ├── urls.py            # Rotas da aplicação
+│   └── templates/         # Páginas HTML (com Bootstrap)
+├── db.sqlite3             # Banco de dados local
+├── manage.py              # Gerenciador do Django
+├── static/                # Arquivos estáticos (CSS, JS, imagens)
+└── README.md              # Documentação do projeto
+
+---
+🌱 Melhorias Futuras
+
+Cadastro de refeições com contagem de macronutrientes.
+
+Dashboard com gráficos de progresso.
+
+Histórico de metas e resultados por perfil.
+
+Exportação de dados em PDF ou CSV.
+
+Autenticação de usuários (login e senha).
+
+Integração com APIs de alimentos.
+
+---
+📄 Licença
+
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
 ---
 
-### 2. Criar ambiente virtual (opcional, mas recomendado)
 
-```bash
-python -m venv venv
+
+
+
