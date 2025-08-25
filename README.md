@@ -59,6 +59,9 @@ venv\Scripts\activate
 Linux/MacOS:
 ```bash
 source venv/bin/activate
+```
+Instalar as dependências:
+```bash
 pip install -r requirements.txt
 ```
 Ou, para instalação mínima:
@@ -67,8 +70,9 @@ pip install django
 ```
 ---
 4. Aplicar migrações
+```bash
 python manage.py migrate
-
+```
 6. Acessar no navegador
 
 Abra seu navegador e acesse:
